@@ -34,6 +34,13 @@ ukeGeeks.chordBrush.prototype = {
 			x : fretBox.topLeftPos.x,
 			y : fretBox.topLeftPos.y
 		};
+		// print baseFret info (if value is greater than 1)
+		if(chord.baseFret>1){
+			ukeGeeks.canvasTools.drawText(ctx, {
+				x: pos.x - 15,
+				y: pos.y + 15
+			}, chord.baseFret, ukeGeeks.settings.fonts.dot, ukeGeeks.settings.colors.text);
+		}
 		this._drawFretboard(ctx, pos, fretBox);
 		// find where the circle centers should be:
 		var centers = {
@@ -99,11 +106,11 @@ ukeGeeks.chordBrush.prototype = {
 		var offset = fretBox.lineWidth / 2;
 		// locals
 		var stringHeight = ukeGeeks.settings.numFrets * fretBox.fretSpace;
-		var fretWidth = 3 * fretBox.stringSpace;
+		var fretWidth = (ukeGeeks.settings.stringCount - 1) * fretBox.stringSpace;
 		// build shape
 		ctx.beginPath();
-		// add "C" & "E" strings
-		for (var i=1; i < 3; i++){
+		// add strings in between highest and lowest
+		for (var i=1; i < (ukeGeeks.settings.stringCount - 1); i++){
 			var x = pos.x + i * fretBox.stringSpace + offset;
 			ctx.moveTo(x, pos.y + offset);  
 			ctx.lineTo(x, pos.y + stringHeight + offset);  

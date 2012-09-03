@@ -30,14 +30,16 @@ ukeGeeks.chordImport = new function(){
 		// chord building filters
 		name : /(\S+)\s+/,
 		frets : /\s+frets\s+([\dx]{4}|(([\dx]{1,2}\s){3})[\dx]{1,2})/i,
+		frets6 : /\s+frets\s+([\dxX]{4}|(([\dxX]{1,2}\s+){3})[\dxX]{1,2}\s+)[\dxX]\s+[\dxX]/i,
+		baseFret: /\s+base-fret\s+[\d]/,
 		fingers : /\s+fingers\s+((\d\s+){3}\d|\d{4})/i,
 		muted : /\s+mute\s+(\d\s){0,3}\d?/i,
-		// TODO: ignores "base-fret 1"
 		// filter "add-in" chord fingers
 		addin : /add:\s*string\s*(\S+)\s+fret\s+(\d+)\sfinger\s(\d)/i,
 		// extra commands
 		instr: /{\s*instrument\s*:\s*(.*?)\s*}/i,
 		tuning: /{\s*tuning\s*:\s*(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s*}/i,
+		tuning6: /{\s*tuning\s*:\s*(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s+(\S+)\s*}/i,
 		// single digit numbers
 		//num: /(\d)/g,
 		numOrX: /(\d{1,2}|x)/gi,
@@ -121,11 +123,19 @@ ukeGeeks.chordImport = new function(){
 	 * @return {string}
 	 */
 	var _getTuning = function(text){
-		var c = text.match(regEx.tuning);
-		if (!c){
+		// check four string
+		var c4 = text.match(regEx.tuning);
+		// check six string
+		var c6 = text.match(regEx.tuning6);
+		if (!c4 && !c6){
 			return null;
 		}
-		return [c[1], c[2], c[3], c[4]];
+		if(c4 && c4.length>0){
+			return [c4[1], c4[2], c4[3], c4[4]];
+		}
+		if(c6.length>0){
+			return [c6[1], c6[2], c6[3], c6[4], c6[5], c6[6]];
+		}
 	};
 	
 	/**
@@ -170,11 +180,16 @@ ukeGeeks.chordImport = new function(){
 	 * @return {void}
 	 */
 	var _fretOMatic = function(text, frets, muted){
-		var f = text.match(regEx.frets);
+		if(ukeGeeks.settings.stringCount===6){
+			var f = text.match(regEx.frets6);
+		}else{
+			var f = text.match(regEx.frets);
+		}
 		if (!f){
 			return;
 		}
-		var m = (f[1].length == 4) ? f[1].match(regEx.any) : f[1].match(regEx.numOrX);
+		var m = (f[1].length == ukeGeeks.settings.stringCount) ? f[1].match(regEx.any) : f[1].match(regEx.numOrX);
+		if(ukeGeeks.settings.stringCount===6) m = (f[1].length == ukeGeeks.settings.stringCount) ? f[1].match(regEx.any) : f[0].match(regEx.numOrX);
 		var j = 0;
 		for(var i in m){
 			var isX = m[i] == 'x' || m[i] == 'X';
@@ -273,6 +288,7 @@ ukeGeeks.chordImport = new function(){
 		_addInDots(dots, adds);
 		chrd.dots = dots;
 		chrd.muted = muted;
+		chrd.baseFret = (text.match(regEx.baseFret))?text.match(regEx.baseFret)[0].match(regEx.numOrX)[0]:"1";
 		return chrd;
 	};
 	
@@ -342,6 +358,8 @@ ukeGeeks.chordImport = new function(){
 		var parts = _textToParts(nL);
 		var n = _getInstrument(text);
 		var t = _getTuning(text);
+		ukeGeeks.settings.tuning = t;
+		ukeGeeks.settings.stringCount = ukeGeeks.settings.tuning.length;
 		return new ukeGeeks.data.instrument(
 			_getKey(n, t), // key
 			n, // name

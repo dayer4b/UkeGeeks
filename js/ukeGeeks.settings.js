@@ -68,6 +68,8 @@ ukeGeeks.settings = new function(){
 		fretSpace: 20, 
 		/**
 		 * String Spacing -- horizontal distance between strings (pixels)
+		 * This is recalculated (based on string count, width, and offset) 
+		 * in ukeGeeks.scriptasaurus.run()
 		 * @property settings.fretBox.stringSpace
 		 * @type int
 		 */
@@ -164,8 +166,10 @@ ukeGeeks.settings = new function(){
 	 * @type int
 	 */
 	this.numFrets = 5;
-
-	this.tuning = ['G','C','E','A'];
+	/**
+	 * Tuning is now derived from the instrument definition
+	 */ 
+	//this.tuning = ['G','C','E','A'];
 
 	/**
 	 * TODO: Clean-up Tab Options!!

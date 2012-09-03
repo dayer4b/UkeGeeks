@@ -22,10 +22,12 @@ ukeGeeks.definitions = new function(){
 
 	/**
 	 * Enum (simple JSON name/value pairs) defining instrument tunings (offsets from standard Soprano Ukulele)
+	 * these properties must match the short names specifed in the addInstrument calls
 	 * @property instrument
 	 * @type JSON
 	 */
 	this.instrument = {
+		guitar: 0, // EADGBE
 		sopranoUke: 0, // GCEA
 		baritoneUke : 7 // DGBA
 	};
@@ -35,27 +37,30 @@ ukeGeeks.definitions = new function(){
 	/**
 	 * Define an instrument's chord dictionary, this makes this instrument avaiable for showing its chord diagrams.
 	 * @method addInstrument
+	 * @param shortName {string} short name of instrument
 	 * @param text {string} Block of CPM text -- specifically looks for instrurment, tuning, and define statements.
 	 * @return {void}
 	 */
-	this.addInstrument = function(text){
-		_instruments.push(text);
+	this.addInstrument = function(shortName,text){
+		_instruments[shortName] = text;
 	};
 
 	/**
 	 * Choose which instrument's chord dictionary you want used for the chord 
 	 * diagrams. NOTE: .
 	 * @method useInstrument
-	 * @param offset {int} (optional) default 0. Number of semitones to shif the tuning.
+	 * @param instrumentShortName {string} required
 	 * @return {void}
 	 */
-	this.useInstrument = function(offset){
-		var offset = (arguments.length > 0) ? arguments[0] : this.instrument.sopranoUke;
-		_offset = parseInt(offset);
-		if (_offset > 0){
-			_map = ukeGeeks.transpose.retune(_offset);
+	this.useInstrument = function(instrumentShortName){
+		if(typeof instrumentShortName!=="undefined"){
+			var offset = this.instrument[instrumentShortName];
+			_offset = parseInt(offset);
+			if (_offset > 0){
+				_map = ukeGeeks.transpose.retune(_offset);
+			}
+			this.setChords(ukeGeeks.chordImport.runBlock(_instruments[instrumentShortName]).chords);
 		}
-		this.setChords(ukeGeeks.chordImport.runBlock(_instruments[0]).chords);
 	};
 	
 	/**

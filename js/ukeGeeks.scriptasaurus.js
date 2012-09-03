@@ -20,19 +20,23 @@ ukeGeeks.scriptasaurus = new function(){
 	/**
 	 * Runs all Scriptasaurus methods. This is your "Do All". See data.song for structure.
 	 * @method run
-	 * @param offset {int} (optional) default 0. Number of semitones to shif the tuning. See ukeGeeks.definitions.instrument.
+	 * @param instrumentShortName {string} (required) See ukeGeeks.definitions.instrument.
 	 * @return {songObject}
 	 */
-	this.run = function(offset){
-		var offset = (arguments.length > 0) ? arguments[0] : ukeGeeks.definitions.instrument.sopranoUke;
+	this.run = function(instrumentShortName){
+		var offset = ukeGeeks.definitions.instrument[instrumentShortName];
 		var h = document.getElementById(ukeGeeks.settings.ids.songText);
 		if (!h) return null;
 	
-		ukeGeeks.definitions.useInstrument(offset);
+		ukeGeeks.definitions.useInstrument(instrumentShortName);
 		
 		// read Music, find chords, generate HTML version of song:
 		var cpm = new ukeGeeks.cpmParser;
 		cpm.init();
+		// recalculate stringSpace based on stringCount and width
+		ukeGeeks.settings.fretBox.stringSpace = (ukeGeeks.settings.fretBox.width - (2*ukeGeeks.settings.fretBox.topLeftPos.x) - ukeGeeks.settings.stringCount)/(ukeGeeks.settings.stringCount - 1);
+		// recalculate dotRadius based on stringSpace
+		ukeGeeks.settings.fretBox.dotRadius = ukeGeeks.settings.fretBox.stringSpace/2;
 		var song = cpm.parse(h.innerHTML);
 		ukeGeeks.definitions.replace(song.defs);
 	

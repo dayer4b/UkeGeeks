@@ -391,4 +391,4 @@ ukeGeeks.tabs.prototype = {
 			}, labels[i], settings.labelFont, settings.lineColor, 'left');
 		}
 	}
-}
+};

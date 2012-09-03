@@ -4,6 +4,7 @@ include_once('ugsphp/Ugs.php');
 
 $builder = Ugs::GetBuilder(Actions::SongList);
 $model = $builder->Build();
+$path = dirname($_SERVER['PHP_SELF']);
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -18,7 +19,7 @@ $model = $builder->Build();
 	<ol>
 	<?php 
 	foreach($model->SongList as $song){
-		echo('<li><a href="' . $song->Uri . '">' . $song->Title . '</a></li>');
+		echo('<li><a href="' . $path . $song->Uri . '">' . $song->Title . '</a></li>');
 	}
 	?>
 	</ol>

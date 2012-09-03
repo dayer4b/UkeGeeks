@@ -1,4 +1,4 @@
-ukeGeeks.definitions.addInstrument("\
+ukeGeeks.definitions.addInstrument("sopranoUke","\
 {instrument: Soprano Ukulele}\
 {tuning: G C E A}\
 # Ab returns G#\

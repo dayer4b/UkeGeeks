@@ -18,8 +18,7 @@
 	* 
   */
 var ukeGeeks = window.ukeGeeks||{};
-
-;/**
+/**
  * Customize your installation. This JSON object controls appearance and 
  * HTML element names. It's divided into four sections: graphics, ids, layout,
  * and "options". 
@@ -222,7 +221,7 @@ ukeGeeks.settings = new function(){
 	};
 
 };
-;/**
+/**
  * A container or Models library. ukegeeks.data is really a "Models" namespace. Please refactor.
  * @class data
  * @namespace ukeGeeks
@@ -392,8 +391,7 @@ ukeGeeks.data = new function(){
 		* @for ukeGeeks.data.addInFinger
 		*/
 
-}
-;/**
+}/**
  * some jQuery-like tools (very, very crappy. wish we could count on jQuery being on the page.)
  * if you do want to use jQuery (and why wouldn't you) I'm not offended if you yank this out.
  * @class toolsLite
@@ -447,8 +445,7 @@ ukeGeeks.toolsLite = new function(){
 	this.pack = function(value){
 		return value.replace(regEx.dbleSpace, ' ').replace(regEx.trim, '');
 	};
-};
-;/**
+};/**
  * Converts text to JSON objects. Accetps either large text blocks or single lines of 
  * text written in CPM syntax (looks for instrument, tuning, and define statements). 
  * @class chordImport
@@ -819,7 +816,7 @@ ukeGeeks.chordImport = new function(){
 	};
 
 }
-;ukeGeeks.transpose = new function(){
+ukeGeeks.transpose = new function(){
 	var re = /^([A-G][#b]?)(.*)/;
 	var tones = {
 		'A' : 0, 
@@ -915,8 +912,7 @@ ukeGeeks.chordImport = new function(){
 		}
 		return s;
 	};
-};
-;/**
+};/**
  * SINGLETON: Defines chords and provides simple lookup (find) tools.
  * @class definitions
  * @namespace ukeGeeks
@@ -1082,7 +1078,7 @@ ukeGeeks.definitions = new function(){
 	};
 	
 };
-;ukeGeeks.definitions.addInstrument("sopranoUke","\
+ukeGeeks.definitions.addInstrument("sopranoUke","\
 {instrument: Soprano Ukulele}\
 {tuning: G C E A}\
 # Ab returns G#\
@@ -1262,7 +1258,7 @@ ukeGeeks.definitions = new function(){
 {define: G/F frets 0 2 1 2}\
 {define: G7/B frets 0 2 1 2}\
 ");
-;ukeGeeks.definitions.addInstrument("guitar","\
+ukeGeeks.definitions.addInstrument("guitar","\
 {instrument: Guitar}\
 {tuning: E A D G B E}\
 #					       '------ strings ------`\
@@ -1629,7 +1625,7 @@ ukeGeeks.definitions = new function(){
 {define: G#maj7		base-fret  1	frets   X   X   1   1   1   3}	\
 {define: G#min		base-fret  4	frets   1   3   3   1   1   1}	\
 ");
-;/**
+/**
  * Wraps three common canvas actions: adding canvas element to DOM, drawing a dot, adding text. A singleton.
  * @class canvasTools
  * @namespace ukeGeeks
@@ -1701,8 +1697,7 @@ ukeGeeks.canvasTools = new function(){
 
 }
 
-
-;/**
+/**
  * First places a Canvas element within a DOM element, then draws a chord diagram on it.
  * @class chordBrush
  * @namespace ukeGeeks
@@ -1891,7 +1886,7 @@ ukeGeeks.chordBrush.prototype = {
 	}
 
 }
-;/**
+/**
  * Reads an HTML (text) block looking for chords in format: [Emaj7]
  * Returns the HTML block with wrapped chords: &lt;code&gt;&lt;strong&gt;&lt;em&gt; 
  * @class chordParser
@@ -2031,8 +2026,7 @@ ukeGeeks.chordParser.prototype = {
 	}
 }
 
-
-;/**
+/**
  * Reads a text block and returns an object containing whatever ChordPro elements it recognizes.
  * 
  * A cleaned, HTML version of song is included.
@@ -2506,8 +2500,7 @@ ukeGeeks.cpmParser.prototype = {
 	}
 
 };
-
-;/**
+/**
  * Draws large chord diagram grid on canvas 
  * @class chordPainter
  * @namespace ukeGeeks
@@ -2597,8 +2590,7 @@ ukeGeeks.chordPainter.prototype = {
 		return this.errors;
 	}
 }
-
-;/**
+/**
  * 
  * @class tabs
  * @namespace ukeGeeks
@@ -2991,8 +2983,8 @@ ukeGeeks.tabs.prototype = {
 			}, labels[i], settings.labelFont, settings.lineColor, 'left');
 		}
 	}
-}
-;/**
+};
+/**
  * Finds page HTML elements & creates ukeGeek objects;
  * Reads song text, parses, draws choard diagrams.
  * 

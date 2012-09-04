@@ -11,7 +11,7 @@ $path = dirname($_SERVER['PHP_SELF']);
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title><?php echo($model->PageTitle); ?> </title>
+<title><?php echo($model->PageTitle); ?></title>
 <script type="text/javascript">var isIE = false;</script>
 <!--[if lt IE 9]>
 <script type="text/javascript">
@@ -30,6 +30,7 @@ document.getElementsByTagName('html')[0].className = 'ie';
 <section>
 	<header>
 		<hgroup>
+			<!-- TODO: create an instrument switcher -->
 			<aside><a href="<?php echo($path . $model->SourceUri); ?>" target="_blank" title="view original song text">Source</a></aside>
 			<h1 class="ugsSongTitle"><?php echo($model->SongTitle); ?></h1>
 			<?php if (strlen($model->Artist) > 0): ?>
@@ -56,9 +57,10 @@ document.getElementsByTagName('html')[0].className = 'ie';
 	</div>
 </section>
 <footer>
+	<!-- TODO: incorporate instrument definitions into text below -->
 	<p>Note: Standard <strong>GCEA</strong> Soprano Ukulele Tuning. <small>Powered by UkeGeeks' Scriptasaurus &bull; ukegeeks.com</small></p>
 </footer>
-<script type="text/javascript" src="<?php echo $path; ?>/js/ukeGeeks.scriptasaurus.merged.js"></script>
+<script type="text/javascript" src="<?php echo $path; ?>/js/libs/scriptasaurus/build/ukeGeeks.scriptasaurus.min.js"></script>
 <script type="text/javascript" src="<?php echo $path; ?>/js/startup.js"></script>
 </body>
 </html>
